@@ -96,7 +96,7 @@ def dotplot(adata, markers, cluster_header, gene_symbols = None, dendrogram = Tr
         sc.pl.dotplot(adata, markers, cluster_header, gene_symbols = gene_symbols, use_raw = False, standard_scale = "var", categories_order = dendrogram, save = save, show = show)
     return 
 
-def stackedviolin(adata, markers, cluster_header, dendrogram = True, save = False, show = False, output_folder = ".", outputfilename_suffix = ""): 
+def stackedviolin(adata, markers, cluster_header, gene_symbols = None, dendrogram = True, save = False, show = False, output_folder = ".", outputfilename_suffix = ""): 
     """\
     Generating scanpy stacked_violin of `adata` with input marker list. 
 
@@ -123,9 +123,9 @@ def stackedviolin(adata, markers, cluster_header, dendrogram = True, save = Fals
         sc.settings.figdir = output_folder
         save = outputfilename_suffix + ".svg"
     if isinstance(dendrogram, bool): 
-        sc.pl.stacked_violin(adata, markers, cluster_header, use_raw = False, dendrogram = dendrogram, save = save, show = show)
+        sc.pl.stacked_violin(adata, markers, cluster_header, gene_symbols = gene_symbols, use_raw = False, dendrogram = dendrogram, save = save, show = show)
     elif isinstance(dendrogram, list): 
-        sc.pl.stacked_violin(adata, markers, cluster_header, use_raw = False, categories_order = dendrogram, save = save, show = show)
+        sc.pl.stacked_violin(adata, markers, cluster_header, gene_symbols = gene_symbols, use_raw = False, categories_order = dendrogram, save = save, show = show)
     return
 
 def matrixplot(adata, markers, cluster_header, dendrogram = True, save = False, show = False, output_folder = "", outputfilename_suffix = ""): 
