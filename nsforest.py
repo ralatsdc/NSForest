@@ -14,6 +14,7 @@ def run_nsforest_with_preprocessing(
     h5ad_filepath,
     cluster_header="cell_type",
     cluster_list=[],
+    save_supplementary=True,
     results_dirpath=".",
     total_counts=0,
 ):
@@ -28,6 +29,8 @@ def run_nsforest_with_preprocessing(
         The cluster header
     cluster_list: list
         List of clusters, default: all clusters
+    save_supplementary: bool (default: True)
+        Whether to save additional supplementary data
     results_dirpath : str
         Directory path for the results
     total_counts : int
@@ -108,7 +111,10 @@ def run_nsforest_with_preprocessing(
         results = nsforesting.NSForest(
             pp_adata,
             cluster_header,
-            cluster_list=cluster_list if isinstance(cluster_list, list) else [cluster_list],
+            cluster_list=(
+                cluster_list if isinstance(cluster_list, list) else [cluster_list]
+            ),
+            save_supplementary=save_supplementary,
             output_folder=f"{results_dirpath}/",
             outputfilename_prefix=cluster_header,
         )
@@ -312,7 +318,11 @@ def calculate_binary_scores_per_gene_per_cluster(
 
 
 def run_nsforest_without_preprocessing(
-        inp_adata_file, cluster_header, cluster_list=[], results_dirpath="."
+    inp_adata_file,
+    cluster_header,
+    cluster_list=[],
+    save_supplementary=True,
+    results_dirpath=".",
 ):
     """Performs the main NS-Forest algorithm to find a list of
     NS-Forest markers for each `cluster_header`.
@@ -323,6 +333,8 @@ def run_nsforest_without_preprocessing(
         Input AnnData file name
     cluster_header : str
         Column in `adata.obs` storing cell annotation
+    save_supplementary: bool (default: True)
+        Whether to save additional supplementary data
     results_dirpath : str
         Directory path for the results
     cluster_list: list
@@ -340,6 +352,7 @@ def run_nsforest_without_preprocessing(
         inp_adata,
         cluster_header,
         cluster_list=cluster_list if isinstance(cluster_list, list) else [cluster_list],
+        save_supplementary=save_supplementary,
         output_folder=f"{results_dirpath}/",
         outputfilename_prefix=cluster_header,
     )
